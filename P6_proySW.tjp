@@ -147,7 +147,7 @@ task WMGame "Web & Mobile Game" {
       task tconfigC "Backend Cloud Configuration" {
         allocate cris
         effort 3d
-        depends WMGame.tback.tconfigC.tpackB
+        depends WMGame.tback.tcloudDef.tpackB
       }
     }
   }
