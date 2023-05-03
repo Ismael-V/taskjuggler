@@ -76,6 +76,18 @@ resource ismael "Ismael Perbech" {
   email "isma@unizar.es"
 }
 
+resource paula "Paula Olivan" {
+  email "paula@unizar.es"
+}
+
+resource juan "Juan Pellicer" {
+  email "juan@unizar.es"
+}
+
+resource angela "Angela Carabela" {
+  email "angela@unizar.es"
+}
+
 # Now we specify the work packages. The whole project is described as
 # a task that contains subtasks. These subtasks are then broken down
 # into smaller tasks and so on. The innermost tasks describe the real
@@ -149,6 +161,27 @@ task WMGame "Web & Mobile Game" {
         effort 3d
         depends WMGame.tback.tcloudDef.tpackB
       }
+    }
+  }
+  task tandF "Android Front End"{
+    purge chargeset
+    chargeset wFront
+    responsible paula
+    depends WMGame.tback.tBEd
+    task tGUId "Android GUI Design" {
+      effort 7d
+      allocate ismael, angela
+    }
+    task tFEAndC "Front End Android Construction" {
+      effort 7d
+      depends WMGame.tandF.tGUId
+      allocate juan, paula
+      actual:effort 14d
+    }
+    task tFEAndD "Front End Android Distribution" {
+      effort 3d
+      depends WMGame.tandF.tFEAndC
+      allocate juan, paula, ismael, cris
     }
   }
 
