@@ -177,7 +177,7 @@ task WMGame "Web & Mobile Game" {
       depends WMGame.tandF.tGUId
       allocate juan, paula
       actual:effort 14d
-      journalentry 2023-03-05 "Problems with Android Libraries" {
+      journalentry 2023-05-03 "Problems with Android Libraries" {
         author paula
         alert red
         summary "The team has ended the game logic before deadline."
