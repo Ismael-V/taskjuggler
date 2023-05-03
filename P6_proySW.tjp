@@ -111,7 +111,7 @@ task WMGame "Web & Mobile Game" {
     }
     task tcloud "Backend Cloud Deployment" {
       depends WMGame.tback.tBEd
-      allocate cris
+      responsible cris
       task tdCloud "Technology Solution For Cloud" {
         effort 1d
         allocate cris, ismael
@@ -139,8 +139,16 @@ task WMGame "Web & Mobile Game" {
     }
     task tcloudDef "Backend Cloud Final Deployment" {
       depends WMGame.tback.tcloud, WMGame.tback.tbackDev
-      effort 5d
-      allocate cris
+      responsible cris
+      task tpackB "Backend Packing for Deployment"{
+        allocate ismael
+        effort 3d
+      }
+      task tconfigC "Backend Cloud Configuration" {
+        allocate cris
+        effort 3d
+        depends WMGame.tback.tconfigC.tpackB
+      }
     }
   }
 
