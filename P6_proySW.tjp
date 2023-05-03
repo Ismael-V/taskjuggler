@@ -126,6 +126,11 @@ task WMGame "Web & Mobile Game" {
       allocate dev1, dev2
       depends WMGame.tback.tlogic
     }
+    task tcloudDef "Backend Cloud Final Deployment" {
+      depends WMGame.tback.tcloud, WMGame.tback.tbackDev
+      effort 5d
+      allocate cris
+    }
   }
 
   task twebF "Web Front End" {
