@@ -107,7 +107,7 @@ task WMGame "Web & Mobile Game" {
     }
     task tcloud "Backend Cloud Deployment" {
       depends WMGame.tback.tBEd
-      effor 3d
+      effort 3d
       allocate cris
     }
     task tlogic "Game logic" {
