@@ -19,7 +19,7 @@ project pSix "Web Game"  2023-03-15 +3.5m {
   # the project reports. If not specified, the current day will be
   # used, but this will likely be outside of the project range, so it
   # can't be seen in the reports.
-  now 2023-04-15-13:00
+  now 2023-05-03-12:48
   # The currency for all money values is the US Dollar.
   currency "EUR"
 
@@ -177,6 +177,11 @@ task WMGame "Web & Mobile Game" {
       depends WMGame.tandF.tGUId
       allocate juan, paula
       actual:effort 14d
+      journalentry 2023-03-05 "Problems with Android Libraries" {
+        author paula
+        alert red
+        summary "The team has ended the game logic before deadline."
+      }
     }
     task tFEAndD "Front End Android Distribution" {
       effort 3d
@@ -290,6 +295,11 @@ textreport frame "" {
   ->8-
   footer "----"
 
+  textreport initp "InitialPlan" {
+    formats html
+    center '<[report id="initialp"]>'
+  }
+
   textreport overvi "Overview" {
     formats html
     center '<[report id="overview"]>'
@@ -341,6 +351,22 @@ taskreport overview "" {
   caption 'All effort values are in man days.'
 }
 
+# A traditional Gantt chart with a project overview.
+taskreport initialp "" {
+  scenarios actual
+  headline "Current Project Plan"
+  columns bsi { title 'WBS' },
+          name, start, end, effort, cost,
+          revenue, chart { ${TaskTip} }
+  # For this report we like to have the abbreviated weekday in front
+  # of the date. %a is the tag for this.
+  timeformat "%a %Y-%m-%d"
+  start 2023-03-15
+  loadunit days
+  hideresource @all
+  balance cost rev
+  caption 'All effort values are in man days.'
+}
 
 # Macro to set the background color of a cell according to the alert
 # level of the task.
