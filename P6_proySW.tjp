@@ -111,7 +111,6 @@ task WMGame "Web & Mobile Game" {
     }
     task tcloud "Backend Cloud Deployment" {
       depends WMGame.tback.tBEd
-      effort 3d
       allocate cris
       task tdCloud "Technology Solution For Cloud" {
         effort 1d
