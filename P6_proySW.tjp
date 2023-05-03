@@ -68,6 +68,10 @@ resource dev3 "Peter Green" {
   email "kkk@unizar.es"
 }
 
+resource cris "Cristina Marzo" {
+  email "cris@unizar.es"
+}
+
 # Now we specify the work packages. The whole project is described as
 # a task that contains subtasks. These subtasks are then broken down
 # into smaller tasks and so on. The innermost tasks describe the real
@@ -100,6 +104,11 @@ task WMGame "Web & Mobile Game" {
       # The effort to finish this task is 5 man-days.
       effort 5d
       allocate dev1
+    }
+    task tcloud "Backend Cloud Deployment" {
+      depends WMGame.tback.tBEd
+      effor 3d
+      allocate cris
     }
     task tlogic "Game logic" {
       effort 12d
