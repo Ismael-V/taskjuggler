@@ -74,6 +74,7 @@ resource cris "Cristina Marzo" {
 
 resource ismael "Ismael Perbech" {
   email "isma@unizar.es"
+  limits { dailymax 4h }
 }
 
 resource paula "Paula Olivan" {
@@ -180,7 +181,7 @@ task WMGame "Web & Mobile Game" {
       journalentry 2023-05-03 "Problems with Android Libraries" {
         author paula
         alert red
-        summary "The team has ended the game logic before deadline."
+        summary "The libraries are incompatible with the Android Version."
       }
     }
     task tFEAndD "Front End Android Distribution" {
