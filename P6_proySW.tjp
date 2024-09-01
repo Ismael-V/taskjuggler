@@ -5,7 +5,7 @@
  * some elements of it
  */
 
-project pSix "Factoring Proyect"  2024-01-01:00:00 +3.0m {
+project pSix "Factoring Proyect"  2024-01-01 +3.5m {
   # Set the default time zone for the project. If not specified, UTC
   # is used.
   timezone "Europe/Paris"
@@ -19,7 +19,7 @@ project pSix "Factoring Proyect"  2024-01-01:00:00 +3.0m {
   # the project reports. If not specified, the current day will be
   # used, but this will likely be outside of the project range, so it
   # can't be seen in the reports.
-  now 2024-09-01-21:30
+  now 2024-09-01-21:00
   # The currency for all money values is the US Dollar.
   currency "EUR"
 
