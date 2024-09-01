@@ -5,7 +5,7 @@
  * some elements of it
  */
 
-project pSix "Factoring Proyect"  2024-01-01 +3.0m {
+project pSix "Factoring Proyect"  2024-01-01:00:00 +3.0m {
   # Set the default time zone for the project. If not specified, UTC
   # is used.
   timezone "Europe/Paris"
