@@ -59,7 +59,6 @@ resource codirector "José Luis Salazar Riaño" {
 
 resource ismael "Ismael Perbech Gállego" {
   email "815120@unizar.es"
-  limits { dailymax 4h }
 }
 
 # Now we specify the work packages. The whole project is described as
