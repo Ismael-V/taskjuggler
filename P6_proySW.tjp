@@ -8,7 +8,7 @@
 project pSix "Factoring Proyect"  2024-01-01 +3.0m {
   # Set the default time zone for the project. If not specified, UTC
   # is used.
-  timezone "Europe/Spain"
+  timezone "Europe/Paris"
   # Hide the clock time. Only show the date.
   timeformat "%Y-%m-%d"
   # Use Euroepan format for numbers
