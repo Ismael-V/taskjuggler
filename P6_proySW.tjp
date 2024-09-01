@@ -5,10 +5,10 @@
  * some elements of it
  */
 
-project pSix "Web Game"  2023-03-15 +3.5m {
+project pSix "Factoring Proyect"  2024-01-01 {
   # Set the default time zone for the project. If not specified, UTC
   # is used.
-  timezone "Europe/Paris"
+  timezone "Europe/Spain"
   # Hide the clock time. Only show the date.
   timeformat "%Y-%m-%d"
   # Use Euroepan format for numbers
@@ -19,7 +19,7 @@ project pSix "Web Game"  2023-03-15 +3.5m {
   # the project reports. If not specified, the current day will be
   # used, but this will likely be outside of the project range, so it
   # can't be seen in the reports.
-  now 2023-05-03-13:00
+  now 2024-09-01-21:30
   # The currency for all money values is the US Dollar.
   currency "EUR"
 
@@ -30,13 +30,12 @@ project pSix "Web Game"  2023-03-15 +3.5m {
 }
 
 # This is not a real copyright for this file. It's just used as an example.
-copyright "Creative Commons 2023 Proyecto Software - Unizar."
+# copyright "Creative Commons 2023 Proyecto Software - Unizar."
 
 # The daily default rate of all resources. This can be overridden for each
 # resource. We specify this, so that we can do a good calculation of
 # the costs of the project.
 rate 145.2
-
 
 # In order to do a simple profit and loss analysis of the project we
 # specify accounts. One for the development costs, one for the
@@ -47,46 +46,22 @@ account cost "Project Cost" {
   account wFront "Web Front-End"
   account back "Back-End"
 }
+
 account rev "Payments"
 # The Profit&Loss analysis should be rev - cost accounts.
 balance cost rev
 
-resource boss "Liz Bullock" {
-  email "iiii@unizar.es"
-  actual:leaves project 2023-05-07 - 2023-05-12
-  rate 160
-}
-resource dev1 "Paul Smith" {
-  email "hhhh@unizar.es"
-}
-resource dev2 "Samantha Müller" {
-  email "jjj@unizar.es"
-  rate 100
-  actual:leaves project 2023-05-07 - 2023-05-12
-}
-resource dev3 "Peter Green" {
-  email "kkk@unizar.es"
+resource director "Ruben Gran Tejero" {
+  email "rgran@unizar.es"
 }
 
-resource cris "Cristina Marzo" {
-  email "cris@unizar.es"
+resource codirector "José Luis Salazar Riaño" {
+  email "jsalazar@unizar.es"
 }
 
-resource ismael "Ismael Perbech" {
-  email "isma@unizar.es"
+resource ismael "Ismael Perbech Gállego" {
+  email "815120@unizar.es"
   limits { dailymax 4h }
-}
-
-resource paula "Paula Olivan" {
-  email "paula@unizar.es"
-}
-
-resource juan "Juan Pellicer" {
-  email "juan@unizar.es"
-}
-
-resource angela "Angela Carabela" {
-  email "angela@unizar.es"
 }
 
 # Now we specify the work packages. The whole project is described as
@@ -94,7 +69,7 @@ resource angela "Angela Carabela" {
 # into smaller tasks and so on. The innermost tasks describe the real
 # work and have resources allocated to them. Many attributes of tasks
 # are inherited from the enclosing task. This saves you a lot of typing.
-task WMGame "Web & Mobile Game" {
+task FProyect "Proyecto Factor" {
 
   # All work-related costs will be booked to this account unless the
   # subtasks specify something different.
@@ -102,19 +77,88 @@ task WMGame "Web & Mobile Game" {
   
   # For the duration of the project we have running cost that are not
   # included in the labor cost.
-  charge 60 perday
-  responsible boss
+  charge 0 perday
+  responsible director
 
-  task tgdesign "General System Design" {
+  task research "Recabado de información" {
+      effort 20d
+      allocate director
+      allocate codirector
+      allocate ismael
+      depends FProyect.deliveries.start
+  }
+
+  task polyLib "Libreria de polinomios" {
+      effort 1d
+      allocate ismael
+      depends FProyect.research
+  }
+
+  task linearSolver "Libreria de factorizacion Berlekamp" {
       effort 2d
-      allocate boss
-      depends WMGame.deliveries.start
+      allocate ismael
+      depends FProyect.polyLib
+  }
+
+  task decarrier "Libreria para deshacer acarreos" {
+      effort 2d
+      actual: effort 3d
+      allocate ismael
+      depends FProyect.polyLib
+  }
+
+  task specificMethod "Algoritmo Specific Method" {
+      effort 1d
+      allocate ismael
+      depends FProyect.linearSolver
+  }
+
+  task genericMethod "Algoritmo Generic Method" {
+      effort 3d
+      allocate ismael
+      depends FProyect.specificMethod
+  }
+
+  task mpiNaiveAlgorithm "Algoritmo de Factorizacion Naive sobre MPI" {
+      effort 1d
+      allocate ismael
+      depends FProyect.research
+  }
+
+  task mpiGenericMethod "Algoritmo Generic Method sobre MPI" {
+      effort 2d
+      actual: effort 10d
+      allocate ismael
+      depends FProyect.genericMethod
+  }
+
+  task externProyects "Compilacion de proyectos para comparar" {
+      effort 2d
+      actual: effort 4d
+      allocate ismael
+      depends FProyect.research
+  }
+
+  task dataGen "Generación de los datos de prueba" {
+      effort 7d
+      allocate codirector
+      depends FProyect.research
+  }
+
+  task comparison "Comparación de propuesta"{
+      effort 2d
+      allocate ismael
+      depends FProyect.mpiGenericMethod, FProyect.externProyects, FProyect.mpiNaiveAlgorithm, FProyect.dataGen
+  }
+
+  task memento "Redactado de la memoria"{
+      effort 7d
+      allocate director, codirector, ismael
+      depends FProyect.research, FProyect.comparison
   }
 
   task tback "Back End" {
     # It is necessary to “purge” the “chargeset” because it has been assigned previously to other variable 
-    purge chargeset
-    chargeset back
     responsible dev1
     depends WMGame.tgdesign
     task tBEd "Back End General Design" {
@@ -223,16 +267,7 @@ task WMGame "Web & Mobile Game" {
       allocate boss
       allocate dev2
       start 2023-06-01
-      actual:effort 15d
-      journalentry 2023-04-13 "Problems with the planned dates" {
-        author boss
-        alert red
-        summary "The whole team asiigned to this task has a trip to visit a new client from May 7th to May 12th. Needed to check if the project can be finished on time or it is necessary to reasign efforts."
-      }
-      depends WMGame.twebF
-      depends WMGame.tback
-  }
-
+ 
     
   task deliveries "Milestones" {
 
@@ -241,7 +276,7 @@ task WMGame "Web & Mobile Game" {
     purge chargeset
     chargeset rev
 
-    task start "Project start" {
+    task start "Comienzo del TFG" {
       # A task that has no duration is a milestone. It only needs a
       # start or end criterion. All other tasks depend on this task.
       # Here we use the built-in macro ${projectstart} to align the
@@ -251,12 +286,12 @@ task WMGame "Web & Mobile Game" {
       # At the beginning of this task we receive a payment from the
       # customer. This is credited to the account associated with this
       # task when the task starts.
-      charge 13000.0 onstart
+      charge 0 onstart
     }
 
-    task done "Ship Product to Customer" {
-      depends WMGame.ttest
-      charge 12000.0 onstart
+    task done "Fin del TFG" {
+      depends FProyect.memento
+      charge 0 onstart
     }
   }
 }
