@@ -108,7 +108,7 @@ task FProyect "Proyecto Factor" {
   task specificMethod "Algoritmo Specific Method" {
       effort 1d
       allocate ismael
-      depends FProyect.linearSolver, decarrier
+      depends FProyect.linearSolver, FProyect.decarrier
   }
 
   task genericMethod "Algoritmo Generic Method" {
