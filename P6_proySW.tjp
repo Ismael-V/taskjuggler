@@ -5,7 +5,7 @@
  * some elements of it
  */
 
-project pSix "Factoring Proyect"  2024-01-01 +3.5m {
+project pSix "Factoring Proyect"  2023-07-01 +3.5m {
   # Set the default time zone for the project. If not specified, UTC
   # is used.
   timezone "Europe/Paris"
@@ -49,14 +49,6 @@ account rev "Payments"
 # The Profit&Loss analysis should be rev - cost accounts.
 balance cost rev
 
-resource director "Ruben Gran Tejero" {
-  email "rgran@unizar.es"
-}
-
-resource codirector "José Luis Salazar Riaño" {
-  email "jsalazar@unizar.es"
-}
-
 resource ismael "Ismael Perbech Gállego" {
   email "815120@unizar.es"
 }
@@ -78,23 +70,30 @@ task FProyect "Proyecto Factor" {
   responsible director
 
   task research "Recabado de información" {
-      effort 20d
-      allocate director
-      allocate codirector
+      effort 30d
       allocate ismael
       depends FProyect.deliveries.start
+      limits {
+          dailymax 4h { resources ismael }
+      }
   }
 
   task polyLib "Libreria de polinomios" {
-      effort 1d
+      effort 2d
       allocate ismael
       depends FProyect.research
+      limits {
+          dailymax 2h { resources ismael }
+      }  
   }
 
   task linearSolver "Libreria de factorizacion Berlekamp" {
       effort 2d
       allocate ismael
       depends FProyect.polyLib
+      limits {
+          dailymax 2h { resources ismael }
+      }
   }
 
   task decarrier "Libreria para deshacer acarreos" {
@@ -102,31 +101,46 @@ task FProyect "Proyecto Factor" {
       actual: effort 3d
       allocate ismael
       depends FProyect.polyLib
+      limits {
+          dailymax 2h { resources ismael }
+      }
   }
 
   task specificMethod "Algoritmo Specific Method" {
-      effort 1d
+      effort 3d
       allocate ismael
       depends FProyect.linearSolver, FProyect.decarrier
+      limits {
+          dailymax 2h { resources ismael }
+      }
   }
 
   task genericMethod "Algoritmo Generic Method" {
       effort 3d
       allocate ismael
       depends FProyect.specificMethod
+      limits {
+          dailymax 2h { resources ismael }
+      }
   }
 
   task mpiNaiveAlgorithm "Algoritmo de Factorizacion Naive sobre MPI" {
-      effort 1d
+      effort 2d
       allocate ismael
       depends FProyect.research
+      limits {
+          dailymax 2h { resources ismael }
+      }
   }
 
   task mpiGenericMethod "Algoritmo Generic Method sobre MPI" {
-      effort 2d
+      effort 4d
       actual: effort 10d
       allocate ismael
       depends FProyect.genericMethod
+      limits {
+          dailymax 2h { resources ismael }
+      }
   }
 
   task externProyects "Compilacion de proyectos para comparar" {
@@ -134,24 +148,37 @@ task FProyect "Proyecto Factor" {
       actual: effort 4d
       allocate ismael
       depends FProyect.research
+      limits {
+          dailymax 2h { resources ismael }
+      }
   }
 
   task dataGen "Generación de los datos de prueba" {
       effort 7d
-      allocate codirector
+      allocate ismael
       depends FProyect.research
+      limits {
+          dailymax 4h { resources ismael }
+      }
   }
 
   task comparison "Comparación de propuesta"{
       effort 2d
+      actual: 7d
       allocate ismael
       depends FProyect.mpiGenericMethod, FProyect.externProyects, FProyect.mpiNaiveAlgorithm, FProyect.dataGen
+      limits {
+          dailymax 2h { resources ismael }
+      }
   }
 
   task memento "Redactado de la memoria"{
-      effort 7d
+      effort 14d
       allocate director, codirector, ismael
       depends FProyect.research, FProyect.comparison
+      limits {
+          dailymax 4h { resources ismael }
+      }
   }
     
   task deliveries "Milestones" {
